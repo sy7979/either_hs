@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {%for question in questions%}
+    <div class="jumbotron my-3">
+        <a href="{%url 'questions:edit' question.id%}"><i class="fas fa-edit text-dark"></i></a>
+        <a href="{%url 'questions:delete' question.id %}"><i class="fas fa-times text-dark"></i></a>
+        <h1 class="display-4 text-center" style="font-family: 'Black Han Sans';">{{question.title}}</h1>
+        <p class='text-center'>한 가지를 선택해주세요</p>
+
+        <div class="row card-deck text-center d-flex justify-content-center" style="width:100%">
+            <div class="card-body text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header display-4 text-weight-bold" style="font-family: 'Do Hyeon', sans-serif;">{{question.content_a}}</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">댓글로 {{question.content_a}} 응원하기</p>
+                    
+                    <a href="{%url 'questions:comments' question.id %}"><button type="button" class="btn btn-outline-light color-white">GOGO!</button></a>
+                    
+                </div>
+            </div>
+            
+            <div class="card-body text-white bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-header display-4 text-weight-bold" style="font-family: 'Do Hyeon', sans-serif;">{{question.content_b}}</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">댓글로 {{question.content_b}} 응원하기</p>
+                    <a href="{%url 'questions:comments' question.id %}"><button type="button" class="btn btn-outline-light color-white">PICK ME!</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="jumbotron my-3">
+        <h1 class="display-4 text-center font-weight-light" style="font-family: 'Black Han Sans';">{{question.title}}</h1>
+        <p class='text-center'>댓글 수를 올려주세요 :)</p>
+
+        <div class="row card-deck text-center d-flex justify-content-center" style="width:100%">
+            <div class="card-body text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header display-4 font-weight-light" style="font-family: 'Do Hyeon', sans-serif;">{{question.content_a}}</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text display-4" style="font-family: 'Do Hyeon', sans-serif;">{{cnt1}}</p>
+                        
+                </div>
+            </div>
+            
+            <div class="card-body text-white bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-header display-4 font-weight-light" style="font-family: 'Do Hyeon', sans-serif;">{{question.content_b}}</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text display-4" style="font-family: 'Do Hyeon', sans-serif;">{{cnt2}}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+    <div class="jumbotron">
+        <h3><i class="fas fa-comments"></i></h3>
+        <form action="{%url 'questions:comments' question.id%}" method='post' class='my-2'>
+            {%csrf_token%}
+            <div class="form-group row">
+                <label for="user_name" class="col-sm-2 col-form-label">글쓴이</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="user_name" name="user_name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="comment" class="col-sm-2 col-form-label">내용</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="comment" name="comment">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="comment" class="col-sm-2 col-form-label">Pick</label>
+                <div class="d-flex justify-content-between col-sm-10">
+                    <div class="">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pick" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">{{question.content_a}}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pick" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">{{question.content_b}}</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary justify-content-between">댓글</button>  
+                </div>
+            </div>
+            
+            <!-- 원본 -->
+            <!-- <div class="d-flex flex-wrap">
+            <fieldset class="form-group form-check-inline">
+                    <label for="comment" class="col-sm-2 col-form-label">Pick</label>
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio"  name='pick' id="gridRadios1" value="1">
+                            <label class="form-check-label" for="gridRadios1">
+                                {{question.content_a}}
+                            </label>
+                            </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio"  name='pick' id="gridRadios2" value="2">
+                            <label class="form-check-label" for="gridRadios2">
+                                {{question.content_b}}
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-outline-secondary justify-content-between">댓글</button>   
+            </div> -->
+            <!-- 원본끝 -->
+           
+        </form>
+
+
+        <h5 class='mt-3' >댓글</h5>
+        <hr class="my-1">
+        {%if question.choice_set.all%}
+        <hr class='my-1'>
+        {%for choice in question.choice_set.all %}
+            {%if choice.pick == 1%}
+                <p class='text-danger font-weight-bold'>{{choice.user_name}}</p>{{choice.comment}}
+            {%else%}
+            <p class='text-warning'>{{choice.user_name}}</p>    {{choice.comment}}
+            {%endif%}
+            <a href="{%url 'questions:comments_delete' question.id choice.id %}"><i class="fas fa-times text-dark"></i></a>
+            <hr class='my-1'>
+        {%endfor%}
+        {%else%}
+            <p>댓글이 없습니다.</p>
+        {%endif%}
+    </div>
+
+{% endblock %}

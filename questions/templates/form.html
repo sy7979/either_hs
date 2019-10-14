@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="inputAddress">질문해주세요</label>
+            <input type="text" class="form-control" id="inputAddress" name="title">
+        </div>        
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="inputEmail4">Choice 1</label>
+            <input type="text" class="form-control" id="inputEmail4" name="content_a">
+            </div>
+            <div class="form-group col-md-6">
+            <label for="inputPassword4">Choice 2</label>
+            <input type="text" class="form-control" id="inputPassword4" name="content_b">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">제출</button>
+    </form>
+{% endblock %}
